@@ -1,0 +1,22 @@
+public class GrowingState implements State {
+  public long duration() {
+    return 45 * 60 * 1000;
+  }
+  private long frame;
+
+  private EntityClass entities;
+
+  public GrowingState(EntityClass entities_) {
+    entities = entities_;
+  }
+
+  public void setup() {
+    entities.setupGrowingState(duration());
+    entities.drawGrowingState(0);
+  }
+
+  public void advanceAndDraw() {
+    ++frame;
+    entities.drawGrowingState(frame);
+  }
+}
