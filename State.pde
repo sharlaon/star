@@ -8,7 +8,7 @@ public class StateClass {
   private void switchToState(int newStateIndex) {
     stateIndex = newStateIndex;
     states[stateIndex].setup();
-    duration =  graphics.myFrameRate * states[stateIndex].duration() / 1000;
+    duration = states[stateIndex].duration();
     lastTime = millis();
   }
 
@@ -24,9 +24,10 @@ public class StateClass {
   }
 
   public void advanceAndDraw() {
-    if (millis() - lastTime > duration) {
+    long time = millis() - lastTime;
+    if (time > duration) {
       switchToState((stateIndex + 1) % states.length);
     }
-    states[stateIndex].advanceAndDraw();
+    states[stateIndex].redraw(time);
   }
 }

@@ -14,7 +14,7 @@ public class EntityClass {
     }
   }
 
-  public void drawGrowingState(long frame) {
+  public void drawGrowingState(long time) {
     for (Entity entity : entities) {
       entity.drawGrowingState(time);
     }
@@ -26,7 +26,7 @@ public class EntityClass {
     }
   }
 
-  public void drawFlashUpState(long frame) {
+  public void drawFlashUpState(long time) {
     for (Entity entity : entities) {
       entity.drawFlashUpState(time);
     }

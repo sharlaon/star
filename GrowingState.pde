@@ -2,7 +2,6 @@ public class GrowingState implements State {
   public long duration() {
     return 45 * 60 * 1000;
   }
-  private long frame;
 
   private EntityClass entities;
 
@@ -15,8 +14,7 @@ public class GrowingState implements State {
     entities.drawGrowingState(0);
   }
 
-  public void advanceAndDraw() {
-    ++frame;
-    entities.drawGrowingState(frame);
+  public void redraw(long time) {
+    entities.drawGrowingState(time);
   }
 }

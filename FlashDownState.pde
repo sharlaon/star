@@ -2,7 +2,6 @@ public class FlashDownState implements State {
   public long duration() {
     return 3 * 1000;
   }
-  private long frame;
 
   private EntityClass entities;
 
@@ -15,8 +14,7 @@ public class FlashDownState implements State {
     entities.drawFlashDownState(0);
   }
 
-  public void advanceAndDraw() {
-    ++frame;
-    entities.drawFlashDownState(frame);
+  public void redraw(long time) {
+    entities.drawFlashDownState(time);
   }
 }

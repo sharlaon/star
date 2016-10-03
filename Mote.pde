@@ -2,6 +2,7 @@ public class MoteClass implements Entity {
   private Graphics graphics;
   private Mote[] motes;
   private final int numberOfMotes = 4; // should probably have log10(numberOfMotes) bewtween 1 and 3
+  long lastTime;
 
   // any precomputed data or mote state here
   // I'm thinking of a precomputed rendering datum like a PShape that they all share
@@ -20,36 +21,42 @@ public class MoteClass implements Entity {
     for (int i = 0; i < numberOfMotes; ++i) {
       motes[i].setupGrowingState(duration_);
     }
+    lastTime = 0;
   }
 
-  public void drawGrowingState(long frame) {
+  public void drawGrowingState(long time) {
     for (int i = 0; i < numberOfMotes; ++i) {
-      motes[i].drawGrowingState(frame);
+      motes[i].drawGrowingState(lastTime, time);
     }
+    lastTime = time;
   }
 
   public void setupFlashUpState(long duration_) {
     for (int i = 0; i < numberOfMotes; ++i) {
       motes[i].setupFlashUpState(duration_);
     }
+    lastTime = 0;
   }
 
-  public void drawFlashUpState(long frame) {
+  public void drawFlashUpState(long time) {
     for (int i = 0; i < numberOfMotes; ++i) {
-      motes[i].drawFlashUpState(frame);
+      motes[i].drawFlashUpState(lastTime, time);
     }
+    lastTime = time;
   }
 
   public void setupFlashDownState(long duration_) {
     for (int i = 0; i < numberOfMotes; ++i) {
       motes[i].setupFlashDownState(duration_);
     }
+    lastTime = 0;
   }
 
-  public void drawFlashDownState(long frame) {
+  public void drawFlashDownState(long time) {
     for (int i = 0; i < numberOfMotes; ++i) {
-      motes[i].drawFlashDownState(frame);
+      motes[i].drawFlashDownState(lastTime, time);
     }
+    lastTime = time;
   }
 
   private class Mote {
@@ -69,7 +76,7 @@ public class MoteClass implements Entity {
       // ...
     }
 
-    public void drawGrowingState(long frame) {
+    public void drawGrowingState(long lastTime, long time) {
       // ...
       graphics.setMote(id, 0 /* data */);
     }
@@ -79,7 +86,7 @@ public class MoteClass implements Entity {
       // ...
     }
 
-    public void drawFlashUpState(long frame) {
+    public void drawFlashUpState(long lastTime, long time) {
       // ...
     }
 
@@ -88,7 +95,7 @@ public class MoteClass implements Entity {
       // ...
     }
 
-    public void drawFlashDownState(long frame) {
+    public void drawFlashDownState(long lastTime, long time) {
       // ...
     }
   }
