@@ -8,7 +8,10 @@ public class Graphics {
   color starColor;
   float starSize;
   private int numberOfMotes;
-  private int[] moteData; // the type "int" will be replaced probably with a position
+  private class MoteData {
+    public float r, theta, z;
+  }
+  private MoteData[] moteData;
 
   public Graphics() {
     frameRate(myFrameRate);
@@ -22,10 +25,15 @@ public class Graphics {
 
   public void setNumberOfMotes(int numberOfMotes_) {
     numberOfMotes = numberOfMotes_;
-    moteData = new int[numberOfMotes];
+    moteData = new MoteData[numberOfMotes];
+    for (int i = 0; i < numberOfMotes; ++i) {
+      moteData[i] = new MoteData();
+    }
   }
 
-  public setMote(int id, int data) {
-    moteData[id] = data;
+  public void setMote(int id, float r, float theta, float z) {
+    moteData[id].r = r;
+    moteData[id].theta = theta;
+    moteData[id].z = z;
   }
 }

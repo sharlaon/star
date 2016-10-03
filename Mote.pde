@@ -64,11 +64,15 @@ public class MoteClass implements Entity {
     private int id;
     private long duration;
 
-    // any mote state (position)
+    private float r, theta, z;
 
     public Mote(Graphics graphics_, int id_) {
       graphics = graphics_;
       id = id_;
+
+      r = random(0.1, 1.0);
+      theta = random(TWO_PI);
+      z = random(-1.0, 1.0);
     }
 
     public void setupGrowingState(long duration_) {
@@ -78,7 +82,7 @@ public class MoteClass implements Entity {
 
     public void drawGrowingState(long lastTime, long time) {
       // ...
-      graphics.setMote(id, 0 /* data */);
+      graphics.setMote(id, r, z, theta);
     }
 
     public void setupFlashUpState(long duration_) {
