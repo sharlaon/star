@@ -9,32 +9,38 @@ public class EntityClass {
   }
 
   public void setupGrowingState(long duration) {
-    for (Entity entity : entities)
+    for (Entity entity : entities){
       entity.setupGrowingState(duration);
+    }
   }
 
   public void drawGrowingState(long frame) {
-    for (Entity entity : entities)
-      entity.drawGrowingState(frame);
+    for (Entity entity : entities) {
+      entity.drawGrowingState(time);
+    }
   }
 
   public void setupFlashUpState(long duration) {
-    for (Entity entity : entities)
+    for (Entity entity : entities) {
       entity.setupFlashUpState(duration);
+    }
   }
 
   public void drawFlashUpState(long frame) {
-    for (Entity entity : entities)
-      entity.drawFlashUpState(frame);
+    for (Entity entity : entities) {
+      entity.drawFlashUpState(time);
+    }
   }
 
   public void setupFlashDownState(long duration) {
-    for (Entity entity : entities)
+    for (Entity entity : entities) {
       entity.setupFlashDownState(duration);
+    }
   }
 
   public void drawFlashDownState(long frame) {
-    for (Entity entity : entities)
+    for (Entity entity : entities) {
       entity.drawFlashDownState(frame);
+    }
   }
 }

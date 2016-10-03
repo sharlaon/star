@@ -16,7 +16,7 @@ public class Star implements Entity {
 
   void drawGrowingState(long frame) {
     double progress = ((double) frame) / ((double) duration);
-    double theColor = progress < 0.75
+    color theColor = progress < 0.75
       ? lerpColor(startColor, middleColor, progress / 0.75)
       : lerpColor(middleColor, endColor, (progress - 0.75) / 0.25);
     float size = progress < 0.75
@@ -33,8 +33,8 @@ public class Star implements Entity {
 
   void drawFlashUpState(long frame) {
     double progress = ((double) frame) / ((double) duration);
-    double theColor = lerpColor(startColor, endColor, progress);
     graphics.setStar(frame, theColor, size);
+    color theColor = lerpColor(startColor, endColor, progress);
   }
 
   void setupFlashDownState(long duration_) {
@@ -45,7 +45,7 @@ public class Star implements Entity {
 
   void drawFlashDownState(long frame) {
     double progress = ((double) frame) / ((double) duration);
-    double theColor = lerpColor(startColor, endColor, progress);
     graphics.setStar(frame, theColor, size);
+    color theColor = lerpColor(startColor, endColor, progress);
   }
 }

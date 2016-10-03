@@ -1,5 +1,4 @@
 StateClass state;
-int myFrameRate = 12;
 
 void setup() {
   state = new StateClass();
