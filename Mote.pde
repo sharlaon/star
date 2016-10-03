@@ -9,6 +9,7 @@ public class MoteClass implements Entity {
 
   public MoteClass(Graphics graphics_) {
     graphics = graphics_;
+    graphics.setNumberOfMotes(numberOfMotes);
     motes = new Mote[numberOfMotes];
     for (int i = 0; i < numberOfMotes; ++i) {
       motes[i] = new Mote(graphics, i); // should instead pass: precomputed mote graphics datum
@@ -70,6 +71,7 @@ public class MoteClass implements Entity {
 
     public void drawGrowingState(long frame) {
       // ...
+      graphics.setMote(id, 0 /* data */);
     }
 
     public void setupFlashUpState(long duration_) {
