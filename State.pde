@@ -29,5 +29,6 @@ public class StateClass {
       switchToState((stateIndex + 1) % states.length);
     }
     states[stateIndex].redraw(time);
+    graphics.assembleAndPush();
   }
 }

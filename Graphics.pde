@@ -36,4 +36,7 @@ public class Graphics {
     moteData[id].theta = theta;
     moteData[id].z = z;
   }
+
+  public void assembleAndPush() {
+  }
 }
