@@ -5,6 +5,8 @@ public class Graphics {
   public final int myFrameRate = 30;
 
   long time;
+  color starColor;
+  float starSize;
   private int numberOfMotes;
   private int[] moteData; // the type "int" will be replaced probably with a position
 
@@ -14,6 +16,8 @@ public class Graphics {
 
   public void setStar(long time_, color starColor_, float starSize_) {
     time = time_;
+    starColor = starColor_;
+    starSize = starSize_;
   }
 
   public void setNumberOfMotes(int numberOfMotes_) {
