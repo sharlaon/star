@@ -11,7 +11,7 @@ public class MoteClass implements Entity {
     graphics = graphics_;
     motes = new Mote[numberOfMotes];
     for (int i = 0; i < numberOfMotes; ++i) {
-      motes[i] = new Mote(graphics); // should instead pass: precomputed mote graphics datum
+      motes[i] = new Mote(graphics, i); // should instead pass: precomputed mote graphics datum
     }
   }
 
@@ -53,13 +53,14 @@ public class MoteClass implements Entity {
 
   private class Mote {
     private Graphics graphics; // again, should be changed
+    private int id;
     private long duration;
 
     // any mote state (position)
 
-    public Mote(Graphics graphics_) {
+    public Mote(Graphics graphics_, int id_) {
       graphics = graphics_;
-      // initialize mote state (position)
+      id = id_;
     }
 
     public void setupGrowingState(long duration_) {
