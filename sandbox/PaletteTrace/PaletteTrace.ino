@@ -7,7 +7,7 @@
 // #define COLOR_ORDER GBR //mike's short teset strip, 19 pixels
 
 #define CHIPSET     APA102
-#define NUM_LEDS    300
+#define NUM_LEDS    600
 
 #define FPS 20
 
