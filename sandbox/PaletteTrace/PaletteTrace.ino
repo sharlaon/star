@@ -1,7 +1,7 @@
 #include <FastLED.h>
 
-#define DATA_PIN   9 // SPI MOSI pin
-#define CLOCK_PIN  8 //13 //SPI  SCK
+#define DATA_PIN   11 // SPI MOSI pin
+#define CLOCK_PIN  13 //13 //SPI  SCK
 
 #define COLOR_ORDER BGR  // most of the 10mm black APA102
 // #define COLOR_ORDER GBR //mike's short teset strip, 19 pixels

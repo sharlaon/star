@@ -4,8 +4,9 @@
  */
 #include <FastLED.h>
 
-#define DATA_PIN   9 // SPI MOSI pin
-#define CLOCK_PIN  8 //13 //SPI  SCK
+#define DATA_PIN   11 // SPI MOSI pin
+#define CLOCK_PIN  13 //13 //SPI  SCK
+
 #define THUMBPOT_PIN A0 // analog in
 #define CHIPSET     APA102
 
@@ -20,7 +21,7 @@ CRGB leds[NUM_LEDS];
 //*********************************************************************
 // define globals
 
-unsigned long long SEQ_PERIOD = 60LL * 1000LL;   // full sequence duration, in milliseconds
+unsigned long long SEQ_PERIOD = 20LL * 1000LL;   // full sequence duration, in milliseconds
 unsigned long int FLASH_DUR = 4 * 1000;         // duration of the flash, rise and fall, in ms
 unsigned long int FLASHRISE_DUR = 1 * 1000;     // duration of the flash rise time
 unsigned long int GROWSEQ_DUR = SEQ_PERIOD - FLASH_DUR; //duration of main growth sequence
@@ -45,26 +46,30 @@ float updateProgress() {
   long int elapsedTime = millis() - phaseStartTime;
   switch(state) {
     case 0: {
-      progress = elapsedTime / GROWSEQ_DUR;
+      progress = float(elapsedTime) / GROWSEQ_DUR;
       break;
     }
     case 1: {
-      progress = elapsedTime / FLASHRISE_DUR;
+      progress = float(elapsedTime) / FLASHRISE_DUR;
       break;
     }
     case 2: {
-      progress = elapsedTime / (FLASH_DUR - FLASHRISE_DUR);
+      progress = float(elapsedTime) / (FLASH_DUR - FLASHRISE_DUR);
       break;
     }
   }
-  
+//  Serial.print("progress: ");
+//  Serial.println(progress);
   // update the state if we are finished
   if (progress >= 1.0) {
     progress = 0;
     phaseStartTime = millis();
     state = state+1 % NSTATE;
+    Serial.print("State change: ");
+    Serial.println(state);
     if (state==0)
       startTime = millis();
+      Serial.println("start over everything");
   }
   return progress;
 }
@@ -78,9 +83,12 @@ CRGB getCurrentColor(int state, float progress) {
   float radius = 0; //where the hell am i putting this?
   switch(state) {
     case 0: {
-      CHSV startColorGrow = CHSV(210, int(0.25 * 255), int(0.5 * 255));
-      CHSV middleColorGrow = CHSV(60, int(0.5 * 255),  int(0.5 * 255));
-      CHSV endColorGrow = CHSV(0, 255, int(0.5 * 255));
+//      CHSV startColorGrow = CHSV(210, int(0.25 * 255), int(0.5 * 255));
+//      CHSV middleColorGrow = CHSV(60, int(0.5 * 255),  int(0.5 * 255));
+//      CHSV endColorGrow = CHSV(0, 255, int(0.5 * 255));
+      CHSV startColorGrow = CHSV(180, int(.8 * 255), int(0.5 * 255));
+      CHSV middleColorGrow = CHSV(60, int(0.9 * 255),  int(0.5 * 255));
+      CHSV endColorGrow = CHSV(0, 255, int(0.8 * 255));
       if (progress < 0.75) {
         newColor = lerpColor(startColorGrow, middleColorGrow, progress / 0.75);
         radius = lerpf(0.1, 0.4, progress / 0.75);
@@ -147,14 +155,17 @@ void setup() {
  * THE MAIN LOOP
  */
 void loop() {
-  fill_solid(leds, NUM_LEDS, CHSV(int(0.2 * 255), int(0.8 * 255), 255));
 
   float progress = updateProgress();
 
-  // test for hue/saturation levels
-  uint16_t v = analogRead(THUMBPOT_PIN);
-  int thumbVal = map(v, 0, 1023, 0, 255);
-  fill_solid(leds, NUM_LEDS, CHSV(thumbVal, 255, 255));
+  CRGB newColor = getCurrentColor(state, progress);
+  fill_solid(leds, NUM_LEDS, newColor);
+
+  
+//  // test for hue/saturation levels
+//  uint16_t v = analogRead(THUMBPOT_PIN);
+//  int thumbVal = map(v, 0, 1023, 0, 255);
+//  fill_solid(leds, NUM_LEDS, CHSV(thumbVal, 255, 255));
 
   FastLED.show();
   FastLED.delay(1000/FPS);
