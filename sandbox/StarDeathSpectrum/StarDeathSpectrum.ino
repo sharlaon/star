@@ -47,6 +47,8 @@ float updateProgress() {
   switch(state) {
     case 0: {
       progress = float(elapsedTime) / GROWSEQ_DUR;
+//      Serial.print("progress: ");
+//      Serial.println(progress);
       break;
     }
     case 1: {
@@ -58,18 +60,18 @@ float updateProgress() {
       break;
     }
   }
-//  Serial.print("progress: ");
-//  Serial.println(progress);
+
   // update the state if we are finished
   if (progress >= 1.0) {
     progress = 0;
     phaseStartTime = millis();
-    state = state+1 % NSTATE;
+    state = ++state % NSTATE;
     Serial.print("State change: ");
     Serial.println(state);
-    if (state==0)
+    if (state==0) {
       startTime = millis();
-      Serial.println("start over everything");
+      Serial.println("start over");
+    }
   }
   return progress;
 }
@@ -86,7 +88,7 @@ CRGB getCurrentColor(int state, float progress) {
 //      CHSV startColorGrow = CHSV(210, int(0.25 * 255), int(0.5 * 255));
 //      CHSV middleColorGrow = CHSV(60, int(0.5 * 255),  int(0.5 * 255));
 //      CHSV endColorGrow = CHSV(0, 255, int(0.5 * 255));
-      CHSV startColorGrow = CHSV(180, int(.8 * 255), int(0.5 * 255));
+      CHSV startColorGrow = CHSV(140, int(.8 * 255), int(0.5 * 255));
       CHSV middleColorGrow = CHSV(60, int(0.9 * 255),  int(0.5 * 255));
       CHSV endColorGrow = CHSV(0, 255, int(0.8 * 255));
       if (progress < 0.75) {
@@ -97,6 +99,8 @@ CRGB getCurrentColor(int state, float progress) {
         newColor = lerpColor(middleColorGrow, endColorGrow, (progress - 0.75) / 0.25);
         radius = lerpf(0.4, 1.0, (progress - 0.75) / 0.25);
       }
+      Serial.print("0: ");
+      printColor(newColor);
       break;
     }
     case 1: {
@@ -105,6 +109,8 @@ CRGB getCurrentColor(int state, float progress) {
       newColor = lerpColor(startColorFlashUp, endColorFlashUp, progress);
       //do an easing on the brightness increase?
       radius = 0; // ? why we setting this to zero here?
+      Serial.print("1: ");
+      printColor(newColor);
       break;
     }
     case 2: {
@@ -112,10 +118,21 @@ CRGB getCurrentColor(int state, float progress) {
       CHSV endColorFlashDown = CHSV(0, 255, 255);
       newColor = lerpColor(startColorFlashDown, endColorFlashDown, progress);
       radius = 0;
+      Serial.print("2: ");
+      printColor(newColor);
       break;
     }
   }
   return newColor;
+}
+
+void printColor(CRGB clr) {
+  Serial.print(clr[0]);
+  Serial.print(" ");
+  Serial.print(clr[1]);
+  Serial.print(" ");
+  Serial.print(clr[2]);
+  Serial.println();
 }
 
 int lerp(int x1, int x2, float t) {
