@@ -1,46 +1,8 @@
-public class EntityClass {
-  private Entity[] entities;
-
-  public EntityClass(Graphics graphics) {
-    entities = new Entity[] {
-      new Star(graphics),
-      new MoteClass(graphics)
-    };
-  }
-
-  public void setupGrowingState(long duration) {
-    for (Entity entity : entities){
-      entity.setupGrowingState(duration);
-    }
-  }
-
-  public void drawGrowingState(long time) {
-    for (Entity entity : entities) {
-      entity.drawGrowingState(time);
-    }
-  }
-
-  public void setupFlashUpState(long duration) {
-    for (Entity entity : entities) {
-      entity.setupFlashUpState(duration);
-    }
-  }
-
-  public void drawFlashUpState(long time) {
-    for (Entity entity : entities) {
-      entity.drawFlashUpState(time);
-    }
-  }
-
-  public void setupFlashDownState(long duration) {
-    for (Entity entity : entities) {
-      entity.setupFlashDownState(duration);
-    }
-  }
-
-  public void drawFlashDownState(long frame) {
-    for (Entity entity : entities) {
-      entity.drawFlashDownState(frame);
-    }
-  }
+public interface Entity {
+  void setupGrowingState(long duration_);
+  void drawGrowingState(long time);
+  void setupFlashUpState(long duration_);
+  void drawFlashUpState(long time);
+  void setupFlashDownState(long duration_);
+  void drawFlashDownState(long time);
 }

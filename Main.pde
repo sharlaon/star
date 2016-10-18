@@ -1,9 +1,9 @@
-StateClass state;
+StateManager stateManager;
 
 void setup() {
-  state = new StateClass();
+  stateManger = new StateManager();
 }
 
 void draw() {
-  state.advanceAndDraw();
+  stateManager.advanceAndDraw();
 }

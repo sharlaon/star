@@ -1,19 +1,15 @@
-public class MoteClass implements Entity {
+public class Motes implements Entity {
   private Graphics graphics;
   private Mote[] motes;
   private final int numberOfMotes = 4; // should probably have log10(numberOfMotes) bewtween 1 and 3
   long lastTime;
 
-  // any precomputed data or mote state here
-  // I'm thinking of a precomputed rendering datum like a PShape that they all share
-  // probably offered by Graphics objects
-
-  public MoteClass(Graphics graphics_) {
+  public Motes(Graphics graphics_) {
     graphics = graphics_;
     graphics.setNumberOfMotes(numberOfMotes);
     motes = new Mote[numberOfMotes];
     for (int i = 0; i < numberOfMotes; ++i) {
-      motes[i] = new Mote(graphics, i); // should instead pass: precomputed mote graphics datum
+      motes[i] = new Mote(graphics, i);
     }
   }
 
