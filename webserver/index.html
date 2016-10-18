@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>
+Supernova countdown
+</title>
+
+<meta http-equiv="refresh" content="10" />
+
+<script type="text/javascript">
+var loadTime = new Date();
+var countdown = XcountdownX;
+function show() {
+  var remaining = (countdown - (new Date() - loadTime))/1000.0;
+  document.getElementById("timer").innerHTML = "Time until next supernova: " + remaining.toString()  + " seconds";
+}
+window.setInterval(show, 100);
+</script>
+</head>
+
+<body>
+<div id="timer"> </div>
+</body>
+</html>
