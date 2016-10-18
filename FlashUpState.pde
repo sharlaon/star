@@ -3,9 +3,9 @@ public class FlashUpState implements State {
     return 1 * 1000;
   }
 
-  private EntityClass entities;
+  private EntityGroup entities;
 
-  public FlashUpState(EntityClass entities_) {
+  public FlashUpState(EntityGroup entities_) {
     entities = entities_;
   }
 

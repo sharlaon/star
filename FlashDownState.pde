@@ -3,9 +3,9 @@ public class FlashDownState implements State {
     return 3 * 1000;
   }
 
-  private EntityClass entities;
+  private EntityGroup entities;
 
-  public FlashDownState(EntityClass entities_) {
+  public FlashDownState(EntityGroup entities_) {
     entities = entities_;
   }
 

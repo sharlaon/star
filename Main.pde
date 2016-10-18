@@ -1,7 +1,7 @@
 StateManager stateManager;
 
 void setup() {
-  stateManger = new StateManager();
+  stateManager = new StateManager();
 }
 
 void draw() {

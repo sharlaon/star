@@ -3,9 +3,9 @@ public class GrowingState implements State {
     return 45 * 60 * 1000;
   }
 
-  private EntityClass entities;
+  private EntityGroup entities;
 
-  public GrowingState(EntityClass entities_) {
+  public GrowingState(EntityGroup entities_) {
     entities = entities_;
   }
 
