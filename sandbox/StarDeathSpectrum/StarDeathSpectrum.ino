@@ -47,8 +47,6 @@ float updateProgress() {
   switch(state) {
     case 0: {
       progress = float(elapsedTime) / GROWSEQ_DUR;
-//      Serial.print("progress: ");
-//      Serial.println(progress);
       break;
     }
     case 1: {
@@ -85,18 +83,15 @@ CRGB getCurrentColor(int state, float progress) {
   float radius = 0; //where the hell am i putting this?
   switch(state) {
     case 0: {
-//      CHSV startColorGrow = CHSV(210, int(0.25 * 255), int(0.5 * 255));
-//      CHSV middleColorGrow = CHSV(60, int(0.5 * 255),  int(0.5 * 255));
-//      CHSV endColorGrow = CHSV(0, 255, int(0.5 * 255));
-      CHSV startColorGrow = CHSV(140, int(.8 * 255), int(0.5 * 255));
-      CHSV middleColorGrow = CHSV(60, int(0.9 * 255),  int(0.5 * 255));
-      CHSV endColorGrow = CHSV(0, 255, int(0.8 * 255));
+      CHSV startColorGrow = CHSV(210, uint8_t(0.25 * 255), uint8_t(0.5 * 255));
+      CHSV middleColorGrow = CHSV(60, uint8_t(0.6 * 255),  uint8_t(0.5 * 255));
+      CHSV endColorGrow = CHSV(0, 255, uint8_t(0.5 * 255));
       if (progress < 0.75) {
-        newColor = lerpColor(startColorGrow, middleColorGrow, progress / 0.75);
+        newColor = blend(startColorGrow, middleColorGrow, uint8_t(255 * progress / 0.75));
         radius = lerpf(0.1, 0.4, progress / 0.75);
       }
       else {
-        newColor = lerpColor(middleColorGrow, endColorGrow, (progress - 0.75) / 0.25);
+        newColor = blend(middleColorGrow, endColorGrow, uint8_t(255 * (progress - 0.75) / 0.25));
         radius = lerpf(0.4, 1.0, (progress - 0.75) / 0.25);
       }
       Serial.print("0: ");
@@ -104,9 +99,9 @@ CRGB getCurrentColor(int state, float progress) {
       break;
     }
     case 1: {
-      CHSV startColorFlashUp = CHSV(0, 255, int(0.5 * 255));
-      CHSV endColorFlashUp = CHSV(0, 255, 255);
-      newColor = lerpColor(startColorFlashUp, endColorFlashUp, progress);
+      CHSV startColorFlashUp = CHSV(0, 255, uint8_t(0.5 * 255));
+      CHSV endColorFlashUp = CHSV(0, 0, 255);
+      newColor = blend(startColorFlashUp, endColorFlashUp, uint8_t(255*progress));
       //do an easing on the brightness increase?
       radius = 0; // ? why we setting this to zero here?
       Serial.print("1: ");
@@ -114,9 +109,9 @@ CRGB getCurrentColor(int state, float progress) {
       break;
     }
     case 2: {
-      CHSV startColorFlashDown = CHSV(0, 255, int(0.5 * 255));
-      CHSV endColorFlashDown = CHSV(0, 255, 255);
-      newColor = lerpColor(startColorFlashDown, endColorFlashDown, progress);
+      CHSV startColorFlashDown = CHSV(0, 255, 255);
+      CHSV endColorFlashDown = CHSV(210, uint8_t(0.25 * 255), uint8_t(0.5 * 255));
+      newColor = blend(startColorFlashDown, endColorFlashDown, uint8_t(255*progress));
       radius = 0;
       Serial.print("2: ");
       printColor(newColor);
@@ -141,14 +136,6 @@ int lerp(int x1, int x2, float t) {
 
 float lerpf(float x1, float x2, float t) {
   return x1 + (x2 - x1) * t;
-}
-
-CRGB lerpColor(CRGB color1, CRGB color2, float interval) {
-  // THIS CONVERSION IS BORKED! FIX IT!
-//  return color1 + (color2 - color1) * int(interval*255);
-  CRGB newColor = CRGB(0, 0, 0);
-  for(int i=0; i<3; i++)
-    newColor[i] = color1[i] + (color2[i] - color1[i]) * int(interval * 255);
 }
 
 //*********************************************************************
