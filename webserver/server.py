@@ -15,4 +15,4 @@ def set(countdown):
     return 'Set current_countdown = ' + str(countdown)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
