@@ -9,15 +9,28 @@ Supernova countdown
 <script type="text/javascript">
 var loadTime = new Date();
 var countdown = XcountdownX;
+function pad(s) {
+  return s.length == 2 ? s : "0" + s;
+}
 function show() {
-  var remaining = (countdown - (new Date() - loadTime))/1000.0;
-  document.getElementById("timer").innerHTML = "Time until next supernova: " + remaining.toString()  + " seconds";
+  var remaining_ms = countdown - (new Date() - loadTime);
+  var remaining_mins = Math.floor(remaining_ms / 60000);
+  remaining_ms -= remaining_mins * 60000;
+  var remaining_secs = Math.floor(remaining_ms / 1000);
+  remaining_ms -= remaining_secs * 1000;
+  var time_string =
+    remaining_mins.toString()
+    + ":" + pad(remaining_secs.toString())
+    + "." + remaining_ms.toString();
+  document.title = time_string;
+  document.getElementById("timer").innerHTML =
+    "Time until next supernova: " + time_string;
 }
 window.setInterval(show, 100);
 </script>
 </head>
 
 <body>
-<div id="timer"> </div>
+<div id="timer" style="font-size: xx-large"> </div>
 </body>
 </html>
