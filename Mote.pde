@@ -60,8 +60,8 @@ public class Motes implements Entity {
     private int id;
     private long duration;
 
-    private final float friction = 0.00001;
-    private final float forceConst = 1.0;
+    private final float friction = 0.0;
+    private final float forceConst = 10.0;
     private final float timeConst = 0.001;
     private final float timeConst_z = 0.001;
 
@@ -69,13 +69,13 @@ public class Motes implements Entity {
     private int bright;
 
     private void randomize() {
-      float r = random(1.0, 2.0);
+      float r = random(0.75, 1.0);
       float theta = random(TWO_PI);
       x = r * cos(theta);
       y = r * sin(theta);
       z_theta = random(TWO_PI);
-      r = random(1.0);
-      theta = random(TWO_PI);
+      r = random(0.1, 0.4);
+      theta = theta + HALF_PI + random(-PI/8.0, PI/8.0);
       v_x = r * cos(theta);
       v_y = r * sin(theta);
       bright = 0;
@@ -92,8 +92,9 @@ public class Motes implements Entity {
     }
 
     public void drawGrowingState(long lastTime, long time) {
-      // apply friction
       float r = sqrt(x*x + y*y); // note cos(theta) = x/r, sin(theta) = y/r
+
+      // apply friction
       float radial_v = v_x * (x/r) + v_y * (y/r); // projection along (x,y)
       float perp_v_x = v_x - radial_v * (x/r); // complementary components
       float perp_v_y = v_y - radial_v * (y/r);
