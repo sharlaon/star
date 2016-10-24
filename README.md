@@ -2,11 +2,11 @@
 
 The files in this sketchbook, listed in descending order of abstraction (earlier items only depend on later ones):
   * Main
-  * State
+  * StateManager
   * GrowingState, FlashUpState, FlashDownState
-  * StateInterface
-  * Entity
+  * State
+  * EntityGroup
   * Star, Mote
-  * EntityInterface
+  * Entity
   * Graphics
   * ...
