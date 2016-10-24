@@ -16,6 +16,7 @@ public class Graphics {
   private int numberOfMotes;
   private class MoteData {
     public float x, y, z_theta;
+    int bright;
   }
   private MoteData[] moteData;
 
@@ -47,10 +48,11 @@ public class Graphics {
     }
   }
 
-  public void setMote(int id, float x, float y, float z_theta) {
+  public void setMote(int id, float x, float y, float z_theta, int bright) {
     moteData[id].x = x;
     moteData[id].y = y;
     moteData[id].z_theta = z_theta;
+    moteData[id].bright = bright;
   }
 
   public void assembleAndPush() {
@@ -64,15 +66,15 @@ public class Graphics {
     // decorate star
     fill(starColor);
     sphere(starSize * SIZE / 2);
-    shape(star);
+//    shape(star);
 
     for (int i = 0; i < numberOfMotes; ++i) {
       pushMatrix();
       float z = sin(moteData[i].z_theta) * stretch_z;
       translate(moteData[i].x * SIZE / 2, moteData[i].y * SIZE / 2, 0);
-      fill(color(280.0 / 360.0, 0.75, 1.0));
+      fill(color(280.0 / 360.0, 0.75, ((float) moteData[i].bright) / ((float) FRAMERATE)));
       rect(0, 0, 20, 20);
-      shape(mote);
+//      shape(mote);
       popMatrix();
     }
   }

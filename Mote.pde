@@ -66,6 +66,7 @@ public class Motes implements Entity {
     private final float timeConst_z = 0.001;
 
     private float x, y, z_theta, v_x, v_y;
+    private int bright;
 
     private void randomize() {
       float r = random(1.0, 2.0);
@@ -77,6 +78,7 @@ public class Motes implements Entity {
       theta = random(TWO_PI);
       v_x = r * cos(theta);
       v_y = r * sin(theta);
+      bright = 0;
     }
 
     public Mote(Graphics graphics_, int id_) {
@@ -111,12 +113,14 @@ public class Motes implements Entity {
       y += v_y * (timeConst * (time - lastTime));
       z_theta += timeConst_z * (time - lastTime);
 
+      if (bright < FRAMERATE) ++bright;
+
       r = sqrt(x*x + y*y);
       if (r < sunSize) {
         randomize();
       }
 
-      graphics.setMote(id, x, y, z_theta);
+      graphics.setMote(id, x, y, z_theta, bright);
     }
 
     public void setupFlashUpState(long duration_) {
