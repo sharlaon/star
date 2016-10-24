@@ -39,7 +39,7 @@ public class StateManager {
       for (int i = (stateIndex + 1) % states.length + 1; i < states.length; ++i) {
         countdown += states[i - 1].duration();
       }
-      String[] blah = loadStrings("http://127.0.0.1:5000/set/" + split(str(countdown), ".")[0]);
+//      loadStrings("http://127.0.0.1:5000/set/" + split(str(countdown), ".")[0]);
       lastCountdown = millis();
     }
   }
