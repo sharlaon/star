@@ -34,7 +34,7 @@ public class Star implements Entity {
   void drawFlashUpState(long time) {
     float progress = ((float) time) / ((float) duration);
     color theColor = lerpColor(startColor, endColor, progress);
-    float size = 0.0;
+    float size = 1.0;
     graphics.setStar(time, theColor, size);
   }
 
@@ -47,7 +47,7 @@ public class Star implements Entity {
   void drawFlashDownState(long time) {
     float progress = ((float) time) / ((float) duration);
     color theColor = lerpColor(startColor, endColor, progress);
-    float size = 0.0;
+    float size = lerp(1.0, 0.1, progress);
     graphics.setStar(time, theColor, size);
   }
 }
