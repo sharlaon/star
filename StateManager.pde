@@ -30,6 +30,7 @@ public class StateManager {
     long time = millis() - lastTime;
     if (time > duration) {
       switchToState((stateIndex + 1) % states.length);
+      time = millis() - lastTime;
     }
     states[stateIndex].redraw(time);
     graphics.assembleAndPush();
