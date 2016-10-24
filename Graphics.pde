@@ -9,7 +9,7 @@ public class Graphics {
   float starSize;
   private int numberOfMotes;
   private class MoteData {
-    public float r, theta, z;
+    public float x, y, z_theta;
   }
   private MoteData[] moteData;
 
@@ -31,10 +31,10 @@ public class Graphics {
     }
   }
 
-  public void setMote(int id, float r, float theta, float z) {
-    moteData[id].r = r;
-    moteData[id].theta = theta;
-    moteData[id].z = z;
+  public void setMote(int id, float x, float y, float z_theta) {
+    moteData[id].x = x;
+    moteData[id].y = y;
+    moteData[id].z_theta = z_theta;
   }
 
   public void assembleAndPush() {
