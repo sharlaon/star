@@ -1,7 +1,7 @@
 public class Motes implements Entity {
   private Graphics graphics;
   private Mote[] motes;
-  private final int numberOfMotes = 1; // should probably have log10(numberOfMotes) bewtween 1 and 3
+  private final int numberOfMotes = 20; // should probably have log10(numberOfMotes) bewtween 1 and 3
   long lastTime;
 
   public Motes(Graphics graphics_) {
