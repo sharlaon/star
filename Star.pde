@@ -9,9 +9,9 @@ public class Star implements Entity {
 
   void setupGrowingState(long duration_) {
     duration = duration_;
-    startColor = color(210.0 / 256.0, 0.25, 0.5);
-    middleColor = color(60.0 / 256.0, 0.5,  0.5);
-    endColor = color(0.0, 1.0, 0.5);
+    startColor = color(170.0 / 256.0, 0.25, 1.0);
+    middleColor = color(60.0 / 256.0, 0.5,  1.0);
+    endColor = color(0.0, 1.0, 1.0);
   }
 
   void drawGrowingState(long time) {
@@ -27,7 +27,7 @@ public class Star implements Entity {
 
   void setupFlashUpState(long duration_) {
     duration = duration_;
-    startColor = color(0.0, 1.0, 0.5);
+    startColor = color(0.0, 1.0, 1.0);
     endColor = color(0.0, 0.0, 1.0);
   }
 
@@ -40,8 +40,8 @@ public class Star implements Entity {
 
   void setupFlashDownState(long duration_) {
     duration = duration_;
-    startColor = color(210.0 / 256.0, 0.0, 1.0);
-    endColor = color(210.0 / 256.0, 0.25, 0.5);
+    startColor = color(170.0 / 256.0, 0.0, 1.0);
+    endColor = color(170.0 / 256.0, 0.25, 1.0);
   }
 
   void drawFlashDownState(long time) {
