@@ -116,7 +116,7 @@ public class Motes implements Entity {
       if (bright < FRAMERATE) ++bright;
 
       r = sqrt(x*x + y*y);
-      if (r < sunSize) {
+      if (r < sunSize || r > 5.0) {
         randomize();
       }
 
