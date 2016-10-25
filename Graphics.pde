@@ -82,10 +82,11 @@ public class Graphics {
 
     PImage starImg = createImage(SUNSIZE, SUNSIZE, ARGB);
     starImg.loadPixels();
+    long curTime = millis();
     for (int x = 0; x < SUNSIZE; ++x) {
       for (int y = 0; y < SUNSIZE; ++y) {
         starImg.pixels[x + SUNSIZE * y] = color(hue(starColor), saturation(starColor),
-          (1.0 + noise(x, y, time / 1000.0)) / 2.0);
+          (1.0 + noise(x, y, curTime / 1000.0)) / 2.0);
       }
     }
     starImg.updatePixels();
