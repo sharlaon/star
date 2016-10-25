@@ -1,6 +1,6 @@
 public class FlashDownState implements State {
   public long duration() {
-    return 3 * 1000;
+    return 1 * 1000;
   }
 
   private EntityGroup entities;
