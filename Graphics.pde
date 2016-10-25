@@ -80,18 +80,19 @@ public class Graphics {
   public void assembleAndPush() {
     background(0);
     translate(SIZE/2, SIZE/2, 0);
-    noStroke();
 
     // hint(DISABLE_DEPTH_MASK);
     // image(backgroundImage, 0, 0, width, height);
     // hint(ENABLE_DEPTH_MASK);
 
+    noStroke();
     PImage starImg = createImage(SUNSIZE, SUNSIZE, ARGB);
     starImg.loadPixels();
+    long curTime = millis();
     for (int x = 0; x < SUNSIZE; ++x) {
       for (int y = 0; y < SUNSIZE; ++y) {
         starImg.pixels[x + SUNSIZE * y] = color(hue(starColor), saturation(starColor),
-          (1.0 + noise(x, y, time / 1000.0)) / 2.0);
+          (1.0 + noise(x, y, curTime / 1000.0)) / 2.0);
       }
     }
     starImg.updatePixels();
@@ -101,6 +102,19 @@ public class Graphics {
     rotateY(HALF_PI);
     shape(star);
     popMatrix();
+
+    stroke(starColor, 0.4);
+    beginShape(LINES);
+    for (int i = 0; i < 400; ++i) {
+      PVector v = PVector.random3D();
+      float x = v.x, y = v.y, z = v.z;
+      float x1 = 1.03 * v.x * starSize * SIZE / 2, x2 = 1.05 * x1;
+      float y1 = 1.03 * v.y * starSize * SIZE / 2, y2 = 1.05 * y1;
+      float z1 = 1.03 * v.z * starSize * SIZE / 2, z2 = 1.05 * z1;
+      vertex(x1, y1, z1);
+      vertex(x2, y2, z2);
+    }
+    endShape();
 
     for (int i = 0; i < numberOfMotes; ++i) {
       pushMatrix();
