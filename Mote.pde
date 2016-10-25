@@ -81,17 +81,7 @@ public class Motes implements Entity {
       bright = 0;
     }
 
-    public Mote(Graphics graphics_, int id_) {
-      graphics = graphics_;
-      id = id_;
-      randomize();
-    }
-
-    public void setupGrowingState(long duration_) {
-      duration = duration_;
-    }
-
-    public void drawGrowingState(long lastTime, long time) {
+    private void draw(long lastTime, long time) {
       float r = sqrt(x*x + y*y); // note cos(theta) = x/r, sin(theta) = y/r
 
       // apply friction
@@ -124,11 +114,26 @@ public class Motes implements Entity {
       graphics.setMote(id, x, y, z_theta, bright);
     }
 
+    public Mote(Graphics graphics_, int id_) {
+      graphics = graphics_;
+      id = id_;
+      randomize();
+    }
+
+    public void setupGrowingState(long duration_) {
+      duration = duration_;
+    }
+
+    public void drawGrowingState(long lastTime, long time) {
+      draw(lastTime, time);
+    }
+
     public void setupFlashUpState(long duration_) {
       duration = duration_;
     }
 
     public void drawFlashUpState(long lastTime, long time) {
+      draw(lastTime, time);
     }
 
     public void setupFlashDownState(long duration_) {
@@ -136,6 +141,7 @@ public class Motes implements Entity {
     }
 
     public void drawFlashDownState(long lastTime, long time) {
+      draw(lastTime, time);
     }
   }
 }
