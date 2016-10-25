@@ -1,7 +1,7 @@
 public class Motes implements Entity {
   private Graphics graphics;
   private Mote[] motes;
-  private final int numberOfMotes = 20; // should probably have log10(numberOfMotes) bewtween 1 and 3
+  private final int numberOfMotes = 500; // should probably have log10(numberOfMotes) bewtween 1 and 3
   long lastTime;
 
   public Motes(Graphics graphics_) {
@@ -69,7 +69,7 @@ public class Motes implements Entity {
     private int bright;
 
     private void randomize() {
-      float r = random(0.75, 1.0);
+      float r = random(0.75, 2.0);
       float theta = random(TWO_PI);
       x = r * cos(theta);
       y = r * sin(theta);
