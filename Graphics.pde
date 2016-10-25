@@ -3,6 +3,7 @@
 // such as for the screen, LEDs, strobes, ...
 final int SIZE = 640;
 final int FRAMERATE = 30;
+final int SUNSIZE = 100;
 
 public void settings() {
   size(SIZE, SIZE, P3D);
@@ -20,18 +21,31 @@ public class Graphics {
   }
   private MoteData[] moteData;
 
-  PShape star;
+  PImage sprite;
   PShape mote;
-  private final float moteSize = 0.05;
-  private final float stretch_z = 0.05;
+  private final float moteSize = 0.008;
+  private final float stretch_z = 0.06;
 
   public Graphics() {
-    frameRate(FRAMERATE);
+//    frameRate(FRAMERATE);
     colorMode(HSB, 1.0);
     rectMode(CENTER);
-    star = createShape(SPHERE, 1.0);
-    mote = createShape(RECT, 0, 0, 20, 20);
-    // decorate the mote
+    camera(SIZE * 1.5, SIZE/2, -SIZE/2, SIZE/2, SIZE/2, 0.0, 0.0, 0.0, 1.0);
+
+    sprite = loadImage("sprite2.png");
+    mote = createShape();
+    mote.beginShape(QUAD);
+    mote.noStroke();
+    mote.texture(sprite);
+    //mote.fill(color(280.0 / 360.0, 0.75, 1.0));
+    mote.normal(2.0 / sqrt(5), 0.0, -1 / sqrt(5));
+    mote.vertex(-SIZE * moteSize / 2.0, -SIZE * moteSize / 2.0, 0, 0);
+    mote.vertex(SIZE * moteSize / 2.0, -SIZE * moteSize / 2.0, sprite.width, 0);
+    mote.vertex(SIZE * moteSize / 2.0, SIZE * moteSize / 2.0, sprite.width,
+      sprite.height);
+    mote.vertex(-SIZE * moteSize / 2.0, SIZE * moteSize / 2.0, 0,
+      sprite.height);
+    mote.endShape();
   }
 
   public void setStar(long time_, color starColor_, float starSize_,
@@ -60,23 +74,35 @@ public class Graphics {
   public void assembleAndPush() {
     background(0);
     translate(SIZE/2, SIZE/2, 0);
+    noStroke();
 
     // hint(DISABLE_DEPTH_MASK);
     // image(backgroundImage, 0, 0, width, height);
     // hint(ENABLE_DEPTH_MASK);
 
-    // decorate star
-    fill(starColor);
-    sphere(starSize * SIZE / 2);
-//    shape(star);
+    PImage starImg = createImage(SUNSIZE, SUNSIZE, ARGB);
+    starImg.loadPixels();
+    for (int x = 0; x < SUNSIZE; ++x) {
+      for (int y = 0; y < SUNSIZE; ++y) {
+        starImg.pixels[x + SUNSIZE * y] = color(hue(starColor), saturation(starColor),
+          (1.0 + noise(x, y, time / 1000.0)) / 2.0);
+      }
+    }
+    starImg.updatePixels();
+    PShape star = createShape(SPHERE, starSize * SIZE / 2);
+    star.setTexture(starImg);
+    pushMatrix();
+    rotateY(HALF_PI);
+    shape(star);
+    popMatrix();
 
     for (int i = 0; i < numberOfMotes; ++i) {
       pushMatrix();
       float z = sin(moteData[i].z_theta) * stretch_z;
-      translate(moteData[i].x * SIZE / 2, moteData[i].y * SIZE / 2, 0);
-      fill(color(280.0 / 360.0, 0.75, ((float) moteData[i].bright) / ((float) FRAMERATE)));
-      rect(0, 0, 20, 20);
-//      shape(mote);
+      translate(moteData[i].x * SIZE / 2, moteData[i].y * SIZE / 2, z * SIZE);
+      rotateY(-0.4*PI);
+      shape(mote);
+      popMatrix();
     }
 
     if (glare != 0.0) {
