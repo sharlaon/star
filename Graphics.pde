@@ -12,7 +12,7 @@ public class Graphics {
 
   long time;
   color starColor;
-  float starSize;
+  float starSize, glare;
   private int numberOfMotes;
   private class MoteData {
     public float x, y, z_theta;
@@ -34,10 +34,12 @@ public class Graphics {
     // decorate the mote
   }
 
-  public void setStar(long time_, color starColor_, float starSize_) {
+  public void setStar(long time_, color starColor_, float starSize_,
+      float glare_) {
     time = time_;
     starColor = starColor_;
     starSize = starSize_;
+    glare = glare_;
   }
 
   public void setNumberOfMotes(int numberOfMotes_) {
@@ -75,7 +77,17 @@ public class Graphics {
       fill(color(280.0 / 360.0, 0.75, ((float) moteData[i].bright) / ((float) FRAMERATE)));
       rect(0, 0, 20, 20);
 //      shape(mote);
-      popMatrix();
     }
+
+    if (glare != 0.0) {
+      hint(DISABLE_DEPTH_TEST);
+      pushMatrix();
+      rotateY(-0.4*PI);
+      fill(1.0, glare);
+      rect(0, 0, 1.5*SIZE, 1.5*SIZE);
+      popMatrix();
+      hint(ENABLE_DEPTH_TEST);
+    }
+    fill(1.0);
   }
 }

@@ -22,7 +22,7 @@ public class Star implements Entity {
     float size = progress < 0.75
       ? lerp(0.1, 0.4, progress / 0.75)
       : lerp(0.4, 1.0, (progress - 0.75) / 0.25);
-    graphics.setStar(time, theColor, size);
+    graphics.setStar(time, theColor, size, 0.0);
   }
 
   void setupFlashUpState(long duration_) {
@@ -35,7 +35,7 @@ public class Star implements Entity {
     float progress = ((float) time) / ((float) duration);
     color theColor = lerpColor(startColor, endColor, progress);
     float size = 1.0;
-    graphics.setStar(time, theColor, size);
+    graphics.setStar(time, theColor, size, 0.0);
   }
 
   void setupFlashDownState(long duration_) {
@@ -48,6 +48,6 @@ public class Star implements Entity {
     float progress = ((float) time) / ((float) duration);
     color theColor = lerpColor(startColor, endColor, progress);
     float size = lerp(1.0, 0.1, progress);
-    graphics.setStar(time, theColor, size);
+    graphics.setStar(time, theColor, size, 1.0 - progress);
   }
 }
