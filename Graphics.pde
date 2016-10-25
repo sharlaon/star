@@ -1,13 +1,15 @@
 // provide upward any interfaces required by Star and Mote.
-// it will combine their stimuli into singals for lower-level graphics interfaces,
+// it will combine their stimuli into signals for lower-level graphics interfaces,
 // such as for the screen, LEDs, strobes, ...
 final int SIZE = 640;
 final int FRAMERATE = 30;
 final int SUNSIZE = 100;
+final String ip = "192.168.2.85"; // ip address of BBB, determined by random coin
 
 public void settings() {
   size(SIZE, SIZE, P3D);
 }
+
 
 public class Graphics {
 
@@ -25,6 +27,8 @@ public class Graphics {
   PShape mote;
   private final float moteSize = 0.008;
   private final float stretch_z = 0.06;
+
+  private PixelOutput pixoutput;
 
   public Graphics() {
 //    frameRate(FRAMERATE);
@@ -46,6 +50,8 @@ public class Graphics {
     mote.vertex(-SIZE * moteSize / 2.0, SIZE * moteSize / 2.0, 0,
       sprite.height);
     mote.endShape();
+
+    pixoutput = new PixelOutput(ip);
   }
 
   public void setStar(long time_, color starColor_, float starSize_,
@@ -116,4 +122,5 @@ public class Graphics {
     }
     fill(1.0);
   }
+
 }
