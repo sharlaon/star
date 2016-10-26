@@ -152,7 +152,7 @@ public class Graphics {
       rect(0, 0, 2.5*SIZE, 2.5*SIZE);
       popMatrix();
       hint(ENABLE_DEPTH_TEST);
-      arduino.analogWrite(ARDUINO_PIN, int(glare * 255.9));
+//      arduino.analogWrite(ARDUINO_PIN, int(glare * 255.9));
     }
     fill(1.0);
   }
