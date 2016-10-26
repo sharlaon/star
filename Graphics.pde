@@ -22,6 +22,7 @@ public class Graphics {
     int bright;
   }
   private MoteData[] moteData;
+  private LittleStar[] starField;
 
   PImage sprite;
   PShape mote;
@@ -77,15 +78,27 @@ public class Graphics {
     moteData[id].bright = bright;
   }
 
+  public void setStarField(LittleStar[] starField_) {
+    starField = starField_;
+  }
+
   public void assembleAndPush() {
     background(0);
+    noStroke();
+
+    pushMatrix();
+    rotateY(-0.4*PI);
+    translate(-SIZE/4, 0.0, -SIZE/2);
+    fill(0.75, 0.5);
+    for (int i = 0; i < starField.length; ++i) {
+      ellipse(starField[i].x(), starField[i].y(), starField[i].size(),
+        starField[i].size());
+    }
+    fill(1.0, 1.0);
+    popMatrix();
+
     translate(SIZE/2, SIZE/2, 0);
 
-    // hint(DISABLE_DEPTH_MASK);
-    // image(backgroundImage, 0, 0, width, height);
-    // hint(ENABLE_DEPTH_MASK);
-
-    noStroke();
     PImage starImg = createImage(SUNSIZE, SUNSIZE, ARGB);
     starImg.loadPixels();
     long curTime = millis();

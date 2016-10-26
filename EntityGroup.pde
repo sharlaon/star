@@ -4,7 +4,8 @@ public class EntityGroup {
   public EntityGroup(Graphics graphics) {
     entities = new Entity[] {
       new Star(graphics),
-      new Motes(graphics)
+      new Motes(graphics),
+      new StarField(graphics)
     };
   }
 
