@@ -1,13 +1,19 @@
+import processing.serial.*;
+import cc.arduino.*;
+
 // provide upward any interfaces required by Star and Mote.
 // it will combine their stimuli into signals for lower-level graphics interfaces,
 // such as for the screen, LEDs, strobes, ...
 final int SIZE = 640;
 final int FRAMERATE = 30;
-final int SUNSIZE = 100;
-final String ip = "192.168.2.85"; // ip address of BBB, determined by random coin
+final int SUNSIZE = 200;
+final String ip = "10.0.1.101"; // ip address of BBB, determined by random coin
+final int ARDUINO_PORT = 3;
+final int ARDUINO_PIN = 6;
 
 public void settings() {
   size(SIZE, SIZE, P3D);
+  fullScreen();
 }
 
 
@@ -26,7 +32,7 @@ public class Graphics {
 
   PImage sprite;
   PShape mote;
-  private final float moteSize = 0.008;
+  private final float moteSize = 0.02;
   private final float stretch_z = 0.06;
 
   private PixelOutput pixoutput;
@@ -88,8 +94,8 @@ public class Graphics {
 
     pushMatrix();
     rotateY(-0.4*PI);
-    translate(-SIZE/4, 0.0, -SIZE/2);
-    fill(0.75, 0.5);
+    translate(-SIZE, 0.0, -SIZE);
+//    fill(0.75, 0.5);
     for (int i = 0; i < starField.length; ++i) {
       ellipse(starField[i].x(), starField[i].y(), starField[i].size(),
         starField[i].size());
@@ -116,7 +122,7 @@ public class Graphics {
     shape(star);
     popMatrix();
 
-    stroke(starColor, 0.4);
+    stroke(starColor, 0.6);
     beginShape(LINES);
     for (int i = 0; i < 400; ++i) {
       PVector v = PVector.random3D();
@@ -141,11 +147,12 @@ public class Graphics {
     if (glare != 0.0) {
       hint(DISABLE_DEPTH_TEST);
       pushMatrix();
-      rotateY(-0.4*PI);
+      rotateY(-0.35*PI);
       fill(1.0, glare);
-      rect(0, 0, 1.5*SIZE, 1.5*SIZE);
+      rect(0, 0, 2.5*SIZE, 2.5*SIZE);
       popMatrix();
       hint(ENABLE_DEPTH_TEST);
+      arduino.analogWrite(ARDUINO_PIN, int(glare * 255.9));
     }
     fill(1.0);
   }

@@ -81,7 +81,7 @@ public class Motes implements Entity {
       bright = 0;
     }
 
-    private void draw(long lastTime, long time) {
+    private void draw(long lastTime, long time, float sunSize) {
       float r = sqrt(x*x + y*y); // note cos(theta) = x/r, sin(theta) = y/r
 
       // apply friction
@@ -93,9 +93,6 @@ public class Motes implements Entity {
 
       // apply sun's gravity
       float progress = ((float) time) / ((float) duration);
-      float sunSize = progress < 0.75
-        ? lerp(0.1, 0.4, progress / 0.75)
-        : lerp(0.4, 1.0, (progress - 0.75) / 0.25);
       float force = -(forceConst * sunSize * sunSize * sunSize) / (r * r);
       v_x += (force * (x/r)) * (timeConst * (time - lastTime));
       v_y += (force * (y/r)) * (timeConst * (time - lastTime));
@@ -125,7 +122,11 @@ public class Motes implements Entity {
     }
 
     public void drawGrowingState(long lastTime, long time) {
-      draw(lastTime, time);
+      float progress = ((float) time) / ((float) duration);
+      float sunSize = progress < 0.75
+        ? lerp(0.1, 0.4, progress / 0.75)
+        : lerp(0.4, 1.0, (progress - 0.75) / 0.25);
+      draw(lastTime, time, sunSize);
     }
 
     public void setupFlashUpState(long duration_) {
@@ -133,7 +134,7 @@ public class Motes implements Entity {
     }
 
     public void drawFlashUpState(long lastTime, long time) {
-      draw(lastTime, time);
+      draw(lastTime, time, 1.0);
     }
 
     public void setupFlashDownState(long duration_) {
@@ -141,7 +142,9 @@ public class Motes implements Entity {
     }
 
     public void drawFlashDownState(long lastTime, long time) {
-      draw(lastTime, time);
+      float progress = ((float) time) / ((float) duration);
+      float sunSize = lerp(1.0, 0.1, progress);
+      draw(lastTime, time, sunSize);
     }
   }
 }

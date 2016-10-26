@@ -1,6 +1,6 @@
 public class FlashUpState implements State {
   public long duration() {
-    return 500;
+    return 2 * 1000;
   }
 
   private EntityGroup entities;

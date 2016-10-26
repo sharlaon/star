@@ -46,8 +46,8 @@ public class LittleStar {
   private final int maxMaxSize = 5;
 
   private void randomize() {
-    x_ = int(random(SIZE));
-    y_ = int(random(SIZE));
+    x_ = int(random(2 * SIZE));
+    y_ = int(random(2 * SIZE));
     maxSize = 1 + int(random(maxMaxSize - 1));
     state = 0;
   }

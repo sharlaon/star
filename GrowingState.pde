@@ -1,7 +1,7 @@
 public class GrowingState implements State {
   public long duration() {
     // return 45 * 60 * 1000;
-    return 100 * 1000;
+    return 10 * 1000;
   }
 
   private EntityGroup entities;
