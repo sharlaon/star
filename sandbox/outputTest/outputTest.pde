@@ -1,4 +1,4 @@
-String ip = "192.168.2.85";
+String ip = "10.0.1.101";
 PixelOutput output;
 
 
@@ -10,6 +10,10 @@ void setup() {
 
 void draw() {
   output.setPixelColors(color(0, 0, 0));
-  //output.sendPackets();
+  RGBPixel pix = output.particles[0];
+  fill(pix.r, pix.g, pix.b);
+  ellipse(width/2, height/2, 10, 10);
+  
+  output.sendPackets();
   
 }

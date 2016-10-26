@@ -8,12 +8,13 @@ int PORT = 7890; //the standard OPC port
 
 boolean firstLoad = true;
 
+class RGBPixel {
+  int i; //linear (global) index
+  int channel;
+  int r,g,b;
+}
+
 public class PixelOutput {
-  class RGBPixel {
-    int i; //linear (global) index
-    int channel;
-    int r,g,b;
-  }
 
   // constants for creating OPC header
   static final int HEADER_LEN = 4;
@@ -107,8 +108,7 @@ public class PixelOutput {
     int channelStart = channel * nPixPerChannel;
     for (int i = channelStart; i < channelStart + nPixPerChannel; ++i) {
       int dataOffset = HEADER_LEN + (i - channelStart) * BYTES_PER_PIXEL;
-      RGBPixel pix = particles[channel * nPixPerChannel + i];
-      println(str(dataOffset + OFFSET_R));
+      RGBPixel pix = particles[i];
       // write to same packetData buffer for each channel
       // we get away with this because we are always sending it immediately
       // this may be a problem if the send is asynchronous, and we overwrite the buffer
@@ -122,8 +122,8 @@ public class PixelOutput {
 
   public void sendPackets() {
     byte[] packet;
-    println("sending packet");
     for (int channel = 0; channel < nChannel; channel++) {
+      println("sending packet " + str(channel));
       packet = getPacketData(channel);
       udp.send(packet, this.ip, this.port);
     }
