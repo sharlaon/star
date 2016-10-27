@@ -12,7 +12,7 @@ public class Star implements Entity {
     startColor = color(170.0 / 256.0, 0.25, 1.0);
     middleColor = color(60.0 / 256.0, 0.5,  1.0);
     endColor = color(0.0, 1.0, 1.0);
-//    arduino.analogWrite(ARDUINO_PIN, 0);
+    graphics.setFlash(0.0);
   }
 
   void drawGrowingState(long time) {

@@ -1,5 +1,4 @@
-import processing.serial.*;
-import cc.arduino.*;
+import hypermedia.net.*;
 
 // provide upward any interfaces required by Star and Mote.
 // it will combine their stimuli into signals for lower-level graphics interfaces,
@@ -7,9 +6,11 @@ import cc.arduino.*;
 final int SIZE = 640;
 final int FRAMERATE = 30;
 final int SUNSIZE = 200;
-final String ip = "10.0.1.101"; // ip address of BBB, determined by random coin
-final int ARDUINO_PORT = 3;
-final int ARDUINO_PIN = 6;
+
+final String BBB_ip = "10.0.1.101"; // ip address of BBB, determined by random coin
+final String PWM_ip1 = "10.0.1.110";
+final String PWM_ip2 = "10.0.1.111";
+final int PWM_port = 6038;
 
 public void settings() {
   size(SIZE, SIZE, P3D);
@@ -36,6 +37,7 @@ public class Graphics {
   private final float stretch_z = 0.06;
 
   private PixelOutput pixoutput;
+  private UDP udp;
 
   public Graphics() {
 //    frameRate(FRAMERATE);
@@ -58,7 +60,8 @@ public class Graphics {
       sprite.height);
     mote.endShape();
 
-    pixoutput = new PixelOutput(ip);
+    pixoutput = new PixelOutput(BBB_ip);
+    udp = new UDP(this, 6000);
   }
 
   public void setStar(long time_, color starColor_, float starSize_,
@@ -86,6 +89,13 @@ public class Graphics {
 
   public void setStarField(LittleStar[] starField_) {
     starField = starField_;
+  }
+
+  public void setFlash(float flash) {
+    byte[] bytes = new byte[2];
+    bytes[0] = byte(int(flash * 255.9));
+    bytes[1] = byte(int(flash * 65535.5 - int(flash * 255.9) * 256));
+    udp.send(bytes, PWM_ip1, PWM_port);
   }
 
   public void assembleAndPush() {
@@ -152,7 +162,7 @@ public class Graphics {
       rect(0, 0, 2.5*SIZE, 2.5*SIZE);
       popMatrix();
       hint(ENABLE_DEPTH_TEST);
-//      arduino.analogWrite(ARDUINO_PIN, int(glare * 255.9));
+      setFlash(glare);
     }
     fill(1.0);
   }
