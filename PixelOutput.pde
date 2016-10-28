@@ -1,20 +1,20 @@
 import hypermedia.net.*;
 import java.awt.Color;
 
-int NUM_LED = 1200;
-int nPixPerChannel = 300; // OPC server is set to 512 pix per channel
-int nChannel = int(NUM_LED / nPixPerChannel);
-int PORT = 7890; //the standard OPC port
-
-boolean firstLoad = true;
 
 public class PixelOutput {
-
   public color[] particles; // buffer with all particles for all channels
   private String ip;  // address of OPC server
   private int port;
 
   OPC opc;
+
+  int NUM_LED = 1200;
+  int nPixPerChannel = 300; // OPC server is set to 512 pix per channel
+  int nChannel = int(NUM_LED / nPixPerChannel);
+  int PORT = 7890; //the standard OPC port
+
+  boolean firstLoad = true;
 
   PixelOutput(PApplet parent, String _ip) {
     this.ip = _ip; // the IP address to send packets to
@@ -29,28 +29,30 @@ public class PixelOutput {
     return int(ix / nPixPerChannel);
   }
 
-  void setPixelColors(color targetColor) {
-    loadPixelColorByStrip();
-    // for (int i = 0; i < this.particles.length, i++) {
-    //   color curColor = targetColor;
-    //   //add perlin noise to pixel bright here
-    //   loadPixelColor(curColor);
-    // }
+  void setPixelColors(color targetColor, boolean useNoise) {
+    for (int i = 0; i < this.particles.length; i++) {
+      float bright = 1;
+      if (useNoise) {
+        bright = (1.0 + noise(i, millis() / 1000.0)) / 2.0)
+      }
+      particles[i] = color(hue(targetColor), saturation(targetColor), bright);
+    }
   }
   
   void loadPixelColor(int pixelIndex, color c) {
     particles[pixelIndex] = c;
   }
 
-  void loadPixelColorByStrip() {
+  void loadPixelColorByChannel() {
+    // use this for tests to identify which channel is which
     color curColor;
     for (int ix=0; ix< particles.length; ix++) {
       curColor = color(getPixChannel(ix) / float(nChannel), 1, 1);
       loadPixelColor(ix, curColor);
-      if (firstLoad) {
-         println(str(getPixChannel(ix)) + " pixel " + str(ix) + " -> h: " + str(hue(particles[ix])) + " s: " + str(saturation(particles[ix])) + " b: " + str(brightness(particles[ix])) );
-         println(str(getPixChannel(ix)) + " pixel " + str(ix) + " -> r: " + str(red(particles[ix])) + " g: " + str(green(particles[ix])) + " b: " + str(blue(particles[ix])) );
-      }
+      // if (firstLoad) {
+      //    println(str(getPixChannel(ix)) + " pixel " + str(ix) + " -> h: " + str(hue(particles[ix])) + " s: " + str(saturation(particles[ix])) + " b: " + str(brightness(particles[ix])) );
+      //    println(str(getPixChannel(ix)) + " pixel " + str(ix) + " -> r: " + str(red(particles[ix])) + " g: " + str(green(particles[ix])) + " b: " + str(blue(particles[ix])) );
+      // }
     } 
     firstLoad = false;
   }

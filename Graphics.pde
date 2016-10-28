@@ -60,7 +60,7 @@ public class Graphics {
       sprite.height);
     mote.endShape();
 
-    pixoutput = new PixelOutput(BBB_ip);
+    pixoutput = new PixelOutput(rootSketch, BBB_ip);
     udp = new UDP(this, 6000);
   }
 
@@ -70,6 +70,8 @@ public class Graphics {
     starColor = starColor_;
     starSize = starSize_;
     glare = glare_;
+    pixoutput.setPixelColors(starColor, false);
+    pixoutput.update();
   }
 
   public void setNumberOfMotes(int numberOfMotes_) {
