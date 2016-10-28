@@ -30,7 +30,8 @@ public class OPC implements Runnable
     thread = new Thread(this);
     thread.start();
     this.enableShowLocations = true;
-    parent.registerMethod("draw", this);
+    // mjp: removed this, need to add back in if we call this.draw() automatically with the PApplet draw()
+    //parent.registerMethod("draw", this);
   }
 
   // Set the location of a single LED

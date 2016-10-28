@@ -32,8 +32,12 @@ public class PixelOutput {
   void setPixelColors(color targetColor, boolean useNoise) {
     for (int i = 0; i < this.particles.length; i++) {
       float bright = 1;
+      if (firstLoad)
+        println("useNoise: " + str(useNoise));
       if (useNoise) {
-        bright = (1.0 + noise(i, millis() / 1000.0)) / 2.0)
+        // MJP: I think this scaling makes sense? aiming for noise between 0.8-1.0
+        // I don't think it is applying it along the particles the way i want it to...
+        bright = 0.8 + noise(i, millis() / 1000.0) /  0.2;
       }
       particles[i] = color(hue(targetColor), saturation(targetColor), bright);
     }

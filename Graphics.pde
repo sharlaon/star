@@ -70,7 +70,7 @@ public class Graphics {
     starColor = starColor_;
     starSize = starSize_;
     glare = glare_;
-    pixoutput.setPixelColors(starColor, false);
+    pixoutput.setPixelColors(starColor, true);
     pixoutput.update();
   }
 
