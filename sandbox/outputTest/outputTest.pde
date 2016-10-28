@@ -3,17 +3,31 @@ PixelOutput output;
 
 
 void setup() {
-  output = new PixelOutput(ip);
+  size(200, 100);
+  output = new PixelOutput(this, ip);
   colorMode(HSB, 1);
 }
 
 
 void draw() {
-  output.setPixelColors(color(0, 0, 0));
-  RGBPixel pix = output.particles[0];
-  fill(pix.r, pix.g, pix.b);
-  ellipse(width/2, height/2, 10, 10);
+  //println("--");
+  output.setPixelColors(color(0.6, 1, 1));
+  displayChannelFirstPixel();
+  output.update();
   
-  output.sendPackets();
-  
+}
+
+void displayChannelFirstPixel() {
+    colorMode(RGB, 255);
+  for (int i=0; i < 4; i++) {
+    color pix = output.particles[i * 300];
+     // add the first pixel so we see what color we are trying to show
+    fill(pix);
+    noStroke();
+    int xoff = (width/5) * (i+1); 
+    ellipse(xoff, height/2, 20, 20);
+    //println(str(i) + " " + xoff);
+    //println(str(pix.r) + " " + str(pix.g) + " " + str(pix.b));
+  }
+  colorMode(HSB, 1);
 }
