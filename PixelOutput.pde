@@ -13,6 +13,7 @@ public class PixelOutput {
   int nPixPerChannel = 300; // OPC server is set to 512 pix per channel
   int nChannel = int(NUM_LED / nPixPerChannel);
   int PORT = 7890; //the standard OPC port
+  private final int noiseLevel = 0.2;
 
   boolean firstLoad = true;
 
@@ -31,14 +32,9 @@ public class PixelOutput {
 
   void setPixelColors(color targetColor, boolean useNoise) {
     for (int i = 0; i < this.particles.length; i++) {
-      float bright = 1;
-      if (firstLoad)
-        println("useNoise: " + str(useNoise));
-      if (useNoise) {
-        // MJP: I think this scaling makes sense? aiming for noise between 0.8-1.0
-        // I don't think it is applying it along the particles the way i want it to...
-        bright = 0.8 + noise(i, millis() / 1000.0) /  0.2;
-      }
+      float bright = useNoise
+        ? bright = (1.0 - noiseLevel) + noiseLevel * noise(i, millis() / 1000.0)
+        : 1.0;
       particles[i] = color(hue(targetColor), saturation(targetColor), bright);
     }
   }
