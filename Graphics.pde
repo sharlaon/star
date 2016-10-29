@@ -61,7 +61,7 @@ public class Graphics {
     mote.endShape();
 
     pixoutput = new PixelOutput(rootSketch, BBB_ip);
-    udp = new UDP(this, 6000);
+    udp = new UDP(this, PWM_port);
   }
 
   public void setStar(long time_, color starColor_, float starSize_,
@@ -98,6 +98,7 @@ public class Graphics {
     bytes[0] = byte(int(flash * 255.9));
     bytes[1] = byte(int(flash * 65535.5 - int(flash * 255.9) * 256));
     udp.send(bytes, PWM_ip1, PWM_port);
+    udp.send(bytes, PWM_ip2, PWM_port);
   }
 
   public void assembleAndPush() {
