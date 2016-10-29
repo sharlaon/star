@@ -13,7 +13,7 @@ public class PixelOutput {
   int nPixPerChannel = 300; // OPC server is set to 512 pix per channel
   int nChannel = int(NUM_LED / nPixPerChannel);
   int PORT = 7890; //the standard OPC port
-  private final int noiseLevel = 0.2;
+  private final float noiseLevel = 0.2;
 
   boolean firstLoad = true;
 
@@ -30,12 +30,14 @@ public class PixelOutput {
     return int(ix / nPixPerChannel);
   }
 
-  void setPixelColors(color targetColor, boolean useNoise) {
+  void setPixelColors(color color_) {
     for (int i = 0; i < this.particles.length; i++) {
-      float bright = useNoise
-        ? bright = (1.0 - noiseLevel) + noiseLevel * noise(i, millis() / 1000.0)
-        : 1.0;
-      particles[i] = color(hue(targetColor), saturation(targetColor), bright);
+      float saturation =
+        saturation(color_) >= 0.75
+        ? (1.0/3.0) * (saturation(color_) - 0.25) + 0.75
+        : 3.0 * saturation(color_);
+      float brightness = (1.0 - noiseLevel) + noiseLevel * noise(i, millis() / 1000.0);
+      particles[i] = color(hue(color_), saturation, brightness);
     }
   }
   
