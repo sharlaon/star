@@ -35,12 +35,9 @@ public class StateManager {
     states[stateIndex].redraw(time);
     graphics.assembleAndPush();
 
-    if (millis() - lastCountdown > 5000) {
-      long countdown = duration - time;
-      for (int i = (stateIndex + 1) % states.length + 1; i < states.length; ++i) {
-        countdown += states[i - 1].duration();
-      }
-//      loadStrings("http://127.0.0.1:5000/set/" + split(str(countdown), ".")[0]);
+    if (millis() - lastCountdown > 5000 && stateIndex == 0) {
+      long countdown = duration - time + 1000;
+      loadStrings("http://127.0.0.1:5000/set/" + split(str(countdown), ".")[0]);
       lastCountdown = millis();
     }
   }

@@ -1,4 +1,6 @@
 public class FlashUpState implements State {
+  public void recomputeDuration() { }
+
   public long duration() {
     return 1 * 1000;
   }

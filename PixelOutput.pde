@@ -21,7 +21,7 @@ public class PixelOutput {
     this.ip = _ip; // the IP address to send packets to
     this.port = PORT;
     this.particles = new color[NUM_LED];
-    
+
     println(str(particles.length) + " leds in array");
     opc = new OPC(parent, this.ip, PORT);
   }
@@ -41,7 +41,7 @@ public class PixelOutput {
       particles[i] = color(hue(color_), saturation, brightness);
     }
   }
-  
+
   void loadPixelColor(int pixelIndex, color c) {
     particles[pixelIndex] = c;
   }
@@ -56,7 +56,7 @@ public class PixelOutput {
       //    println(str(getPixChannel(ix)) + " pixel " + str(ix) + " -> h: " + str(hue(particles[ix])) + " s: " + str(saturation(particles[ix])) + " b: " + str(brightness(particles[ix])) );
       //    println(str(getPixChannel(ix)) + " pixel " + str(ix) + " -> r: " + str(red(particles[ix])) + " g: " + str(green(particles[ix])) + " b: " + str(blue(particles[ix])) );
       // }
-    } 
+    }
     firstLoad = false;
   }
 

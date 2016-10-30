@@ -1,4 +1,6 @@
 public class FlashDownState implements State {
+  public void recomputeDuration() {}
+
   public long duration() {
     return 5 * 1000;
   }

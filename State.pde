@@ -1,5 +1,6 @@
 public interface State {
-  long duration(); // I can't figure out how to attach an abstract const to an interface in Java.
+  void recomputeDuration();
+  long duration();
   void setup(); // CANNOT be dependent on millis()!
   void redraw(long time);
 }
